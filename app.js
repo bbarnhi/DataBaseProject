@@ -32,13 +32,15 @@ app.use(bodyParser.urlencoded({
   })
 )
 
+//PSUEDO CODE 
+
 // Submit Sales Order Function
 
 // Generate HTML PAGE with 4 fields
 // Onsubmit push -> item, quantity, dateOrdered, customerId
 // onSubmit() Function 
-//     Run 'INSERT INTO "salesOrder" ("item", "qty", "dateOrdered", "customerId") VALUES ($1, $2, $3)', ['item', 'qty', 'dateOrdered', 'customerId'],
-//     Print to Screen -> Notification to Sales Rep 
+//     Run 'INSERT INTO "salesOrder" ("item", "qty", "dateOrdered", "customerId", "repId") VALUES ($1, $2, $3, $4, $5)', ['item', 'qty', 'dateOrdered', 'customerId', 'repId'],
+//     Print to Screen -> Notification to Sales Rep    *** Note RepId can be ''null'' special submit actions needed to ensure is NULL not UNDEFINED
 
 //viewOrders(myRepNumber)
 //      'SELECT * FROM salesOrder WHERE dateRecieved != null && (RepID == null OR RepID == myrepNumber)'
@@ -47,7 +49,7 @@ app.use(bodyParser.urlencoded({
 //viewOrderDetail()
 //      'SELECT * FROM salesOrder WHERE orderId == $1', ['OrderId']
 //      Print to screen a list of all items with quantity to screen
-//          Add drop down menu with manufactures 
+//          Add drop down menu with manufactures (where itemid exists in manufacuture)
 //submitPurchaseOrder()
 //      Error checking all items from sales order have a manufacture
 //      #TODO - Remove Sales Order Table -- Add Fields  "MFID", "PurchaseOrder (T/F)"  -- Create logic purchase order only possible if all items in OrderId have MFID 
@@ -55,13 +57,19 @@ app.use(bodyParser.urlencoded({
 //             if (MFID.exists){count++}
 //               if count === total#ofItemsInOrder {
 //                   'UPDATE "salesOrder" SET "MFID" = $1, "PurchaseOrder" = true, ['MFID', 'PurchaseOrder']
-//               } 
+//                    Contacts the manufacture to fill the order
+//                 } 
+
+//manufactureOrderView()
+//      'SELECT * FROM salesOrder WHERE dateRecieved != null && purchaseOrder = true'
+//      Display Items + Qty --->  Fill Order
+//      Onlclick Fill order call function manufactureFillOrder()
+//manufactureFillOrder()
+//      'UPDATE "salesOrder" SET "orderRecieved" = today
+//       Sends Notificaiton to repID & customerID
 
 
-//      Original
-//      INSERT INTO "purchaseOrder" ("itemId", "qty", "dateOrdered", "customerId***", "repId", "manufactureId") VALUES ($1,$2,$3,$4,$5,$6)',  ['itemId', 'qty', 'dateOrdered', 'customerId?', 'repId', 'manufactureId']
-
-app.get('/createUser', db.createUser)
+app.get('/createUser/', db.createUser)
 app.get('/userDetails/:id', db.userDetails)
 app.put('/userUpdate/', db.updateUser)
 app.delete('/userDelete/:id', db.deleteUser)
