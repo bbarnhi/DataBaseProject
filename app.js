@@ -1,8 +1,12 @@
+import React from 'react';
+import './app.css';
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('./queries')
 const app = express()
 const port = 3000
+
 
 /////////////////////// Minimum Functionality /////////////
 // X 1) Create new Users
@@ -13,10 +17,10 @@ const port = 3000
 //////////////////////// Stretch Goal 1 ////////////////////
 // X 1) Add Data -- User data added via postman
 // 2) Add item entries 
-// 3) Add purchaseOrder entries
-// 4) add salesOrder entries
-// 5) add Customers entries
-// 6) add Manufactures entries
+// X 3) Add purchaseOrder entries
+// X 4) add salesOrder entries
+// X 5) add Customers entries
+// X 6) add Manufactures entries
 //////////////////////// Stretch Goal 2 ////////////////////
 // 1) Error checking that new Orders only use existing items from "Item Table"
 //
@@ -32,6 +36,38 @@ app.use(bodyParser.urlencoded({
   })
 )
 
+class App extends React.Component {
+
+
+
+render(){
+  app.get('/allUsers', db.getUsers)
+
+
+  return (
+    <div>
+      <div class="userPage"></div>
+        <div class="allUsers"></div>  //Create a for loop to capture an print the following line for each user
+          <p>{userId[i]} {firstName[i]} {lastName[i]} {email[i]}</p><button onlick="editUserDetails">Edit User</button><button onclick="deleteUser">Delete User</button>
+          
+          
+          <div class="createUser"></div>
+          <div class="userDetails"></div>
+          <div class="updateUserDetails"></div>
+          <div class="deleteUser"></div>
+       <div class="customerPage"></div>
+        <div class="createOrder"></div>
+          <select name="newItems" id="newItems">   //create a for loop for each item to populate drop down
+            <option value="item[X]">{item[X]}</option>
+          </select>
+        <div class="repReview"></div>
+      <div class="manufacture"></div>
+        <div class="fulfillOrder"></div>
+    </div>
+  )
+}
+
+}
 //PSUEDO CODE 
 
 // Submit Sales Order Function
@@ -76,3 +112,4 @@ app.delete('/userDelete/:id', db.deleteUser)
 app.get('/allUsers', db.getUsers)
 
 app.listen(port, () => { console.log(`App is currently running port ${port}`)})
+export default App;
